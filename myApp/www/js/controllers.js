@@ -41,16 +41,14 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('BeersCtrl', function($scope, $http) {
+  $http.get('https://salty-taiga-88147.herokuapp.com/?key=99b3d12b04f2a8819b92ee2a9fea3e19/').then(function(response) {
+    $scope.results=response.data;
+   // For JSON responses, resp.data contains the result
+ }, function(err) {
+   // err.status will contain the status code
+ })
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('BeerCtrl', function($scope, $stateParams) {
 });
