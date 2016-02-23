@@ -7,10 +7,10 @@
       </label>
     </div>
 
-    <ion-list>
-      <ion-item ng-repeat="s in searchResults | filter: (!disableFilter || '') && {name: beerSearch}">
+    <div class="list list-card">
+      <ion-item ng-repeat="s in searchResults | filter: (!disableFilter || '') && {name: beerSearch}" class="item item-icon-left">
         <strong>{{s.name}}</strong>
       </ion-item>
-    </ion-list>
+    </div>
   </ion-content>
 </ion-view>
