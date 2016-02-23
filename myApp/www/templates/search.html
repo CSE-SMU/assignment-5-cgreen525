@@ -1,5 +1,16 @@
 <ion-view view-title="Search">
   <ion-content>
-    <h1>Search</h1>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search beer (by name)" ng-model="beerSearch">
+      </label>
+    </div>
+
+    <ion-list>
+      <ion-item ng-repeat="s in searchResults | filter: (!disableFilter || '') && {name: beerSearch}">
+        <strong>{{s.name}}</strong>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

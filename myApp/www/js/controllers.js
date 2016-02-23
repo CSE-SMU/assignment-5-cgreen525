@@ -41,13 +41,26 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('BeersCtrl', function($scope, $http) {
-  $http.get('https://salty-taiga-88147.herokuapp.com/?key=99b3d12b04f2a8819b92ee2a9fea3e19/').then(function(response) {
-    $scope.results=response.data;
+.controller('CategoriesCtrl', function($scope, $http) {
+  var searched = $scope.categorySearch;
+  $http.get('https://salty-taiga-88147.herokuapp.com/categories/?key=99b3d12b04f2a8819b92ee2a9fea3e19').then(function(response) {
+    $scope.results = response.data.data;
    // For JSON responses, resp.data contains the result
- }, function(err) {
-   // err.status will contain the status code
- })
+   }, function(err) {
+     // err.status will contain the status code
+   })
+})
+
+.controller('SearchCtrl', function($scope, $http) {
+  $scope.searchResults=[];
+
+  var searched = $scope.beerSearch;
+  $http.get('https://salty-taiga-88147.herokuapp.com/beers/?key=99b3d12b04f2a8819b92ee2a9fea3e19', [name=searched]).then(function(response) {
+    $scope.searchResults = response.data.data;
+   // For JSON responses, resp.data contains the result
+   }, function(err) {
+     // err.status will contain the status code
+   })
 })
 
 .controller('BeerCtrl', function($scope, $stateParams) {
