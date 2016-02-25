@@ -51,17 +51,23 @@ angular.module('starter.controllers', [])
    })
 })
 
-.controller('SearchCtrl', function($scope, $http) {
+.controller('SearchCtrl', function($scope, $http, $state) {
   $scope.searchResults=[];
 
   var searched = $scope.beerSearch;
-  $http.get('https://salty-taiga-88147.herokuapp.com/beers/?key=99b3d12b04f2a8819b92ee2a9fea3e19', [name=searched]).then(function(response) {
+  $http.get('https://salty-taiga-88147.herokuapp.com/beers/?key=99b3d12b04f2a8819b92ee2a9fea3e19',
+    params: {
+      //link to input fields of form
+      //parameter stuff here
+    }).then(function(response) {
     $scope.searchResults = response.data.data;
    // For JSON responses, resp.data contains the result
    }, function(err) {
      // err.status will contain the status code
    })
 })
+
+//factory 'BeerData' to handle data from response
 
 .controller('BeerCtrl', function($scope, $stateParams) {
 });
