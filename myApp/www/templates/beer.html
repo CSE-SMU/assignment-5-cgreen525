@@ -1,5 +1,18 @@
-<ion-view view-title="Beer">
+<ion-view view-title="Details">
   <ion-content>
-    <h1>Beer</h1>
+    <ion-list>
+      <ion-item ng-repeat="b in beerList | filter:{id:selectedID}" class="item item-text-wrap">
+        <div class="text-center">
+          <div class="item item-divider">
+            <strong>{{b.name}}</strong>
+          </div>
+          ABV: <strong>{{b.abv}}%</strong><br>
+          IBU: <strong>{{b.ibu}}</strong> <br>
+        <img ng-src={{b.labels.medium}}> <br>
+        <p>
+          {{b.description}}
+        </p>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

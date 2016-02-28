@@ -25,7 +25,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
@@ -42,26 +42,18 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
+  .state('app.beers', {
+    url: '/beers',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/beers.html',
+        controller: 'BeersCtrl'
       }
-    })
-    .state('app.categories', {
-      url: '/categories',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/categories.html',
-          controller: 'CategoriesCtrl'
-        }
-      }
-    })
+    }
+  })
 
-  .state('app.single', {
-    url: '/categories/:beerId',
+  .state('app.beer', {
+    url: '/beers/:id',
     views: {
       'menuContent': {
         templateUrl: 'templates/beer.html',

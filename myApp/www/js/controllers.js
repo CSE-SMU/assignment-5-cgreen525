@@ -2,72 +2,60 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
 })
 
-.controller('CategoriesCtrl', function($scope, $http) {
-  var searched = $scope.categorySearch;
-  $http.get('https://salty-taiga-88147.herokuapp.com/categories/?key=99b3d12b04f2a8819b92ee2a9fea3e19').then(function(response) {
-    $scope.results = response.data.data;
-   // For JSON responses, resp.data contains the result
-   }, function(err) {
-     // err.status will contain the status code
-   })
+.factory('BeerData', function(){                                          // This factory stores information as a singleton so multiple controllers can access it
+  return {data: {}};
 })
 
-.controller('SearchCtrl', function($scope, $http, $state) {
-  $scope.searchResults=[];
+.controller('SearchCtrl', function($scope, $state, $http, BeerData) {     // use dependency injection to get the BeerData factory
+  $scope.form = {};
+  $scope.loading = false;                                                  // used to store your form data
 
-  var searched = $scope.beerSearch;
-  $http.get('https://salty-taiga-88147.herokuapp.com/beers/?key=99b3d12b04f2a8819b92ee2a9fea3e19',
-    params: {
-      //link to input fields of form
-      //parameter stuff here
-    }).then(function(response) {
-    $scope.searchResults = response.data.data;
-   // For JSON responses, resp.data contains the result
-   }, function(err) {
-     // err.status will contain the status code
-   })
+  $scope.search = function() {
+    $scope.loading=true;                                            // called when the search button is clicked
+    $http({
+      method: 'GET',
+      url: 'https://salty-taiga-88147.herokuapp.com/beers',               // the link to my proxy
+      params: {                                                           // sets the GET params
+        name: $scope.form.name,
+        hasLabels: $scope.form.labels,
+        isOrganic: $scope.form.organic,
+        abv: $scope.form.abv,
+        ibu: $scope.form.ibu,
+        order: $scope.form.order,
+        sort: $scope.form.sort
+      }
+    })
+    .then(function successCallback(response) {
+      console.log("SEARCH FUNCTION CALLED");
+      console.log("name: " + $scope.form.name);
+      console.log("labels: " + $scope.form.labels);
+      console.log("organic: " + $scope.form.organic);
+      console.log("abv: " + $scope.form.abv);
+      console.log("order: " + $scope.form.order);
+      console.log("sort: " + $scope.form.sort);
+      BeerData.data = response.data;                                      // save the response data in the factory
+      $state.go('app.beers');                                             // go to the beer results state
+    })
+    .finally(function () {
+      // Hide loading spinner whether our call succeeded or failed.
+      $scope.loading = false;
+    });
+  }
 })
 
-//factory 'BeerData' to handle data from response
+.controller('BeersCtrl', function($scope, BeerData) {
+  $scope.beerList = BeerData.data.data;
+})
 
-.controller('BeerCtrl', function($scope, $stateParams) {
+
+.controller('BeerCtrl', function($scope, $stateParams, BeerData) {        // use dependency injection to get the BeerData factory
+  /*console.log(BeerData.data.data);*/
+  $scope.beerList = BeerData.data.data;
+  $scope.selectedID = $stateParams.id;
+                                           // test to make sure the id gets passed through the URL
+
+  // make another http request to get the beer or...
+  // loop through BeerData to find the beer with the same id
 });
