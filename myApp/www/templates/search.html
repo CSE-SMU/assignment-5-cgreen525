@@ -2,7 +2,7 @@
   <ion-content>
     <div class="list">
       <div class="item item-divider">
-        General Info
+        Beer Info:
       </div>
       <label class="item item-input item-floating-label">
         <span class="input-label">Name:</span>
@@ -28,6 +28,10 @@
           <option value="+50">Greater than 50</option>
         </select>
       </label>
+
+      <div class="item item-divider">
+        Filter:
+      </div>
       <div class="item item-toggle">
         Organic
         <label class="toggle toggle-balanced">
@@ -37,29 +41,6 @@
            </div>
         </label>
       </div>
-
-      <div class="item item-divider">
-        Filters
-      </div>
-      <label class="item item-input item-select">
-        <div class="input-label">
-          Sort by
-        </div>
-        <select ng-model="form.order">
-          <option value="name">Name</option>
-          <option value="abv">ABV</option>
-          <option value="ibu">IBU</option>
-        </select>
-      </label>
-      <label class="item item-input item-select">
-        <div class="input-label">
-          Order
-        </div>
-        <select ng-model="form.sort">
-          <option value="ASC">Low to High (alphabetic)</option>
-          <option value="DESC">High to Low</option>
-        </select>
-      </label>
       <div class="item item-toggle">
         Require Labels
         <label class="toggle toggle-balanced">
@@ -69,10 +50,30 @@
            </div>
         </label>
       </div>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Sort By
+        </div>
+        <select ng-model="form.order">
+          <option value="name">Name</option>
+          <option value="abv">ABV</option>
+          <option value="ibu">IBU</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          In Order
+        </div>
+        <select ng-model="form.sort">
+          <option value="ASC">Low to High (alphabetic)</option>
+          <option value="DESC">High to Low</option>
+        </select>
+      </label>
     </div>
-    <br>
     <div class="text-center">
-      <ion-spinner icon="spiral" ng-show="loading"></ion-spinner>
+      <div class="spinner">
+        <ion-spinner icon="ios" ng-show="loading"></ion-spinner>
+      </div>
     </div>
   </ion-content>
 	<div class="bar bar-footer bar-balanced" ng-click="search()">

@@ -3,11 +3,9 @@
     <ion-list>
       <ion-item ng-repeat="b in beerList | filter:{id:selectedID}" class="item item-text-wrap">
         <div class="text-center">
-          <div class="item item-divider">
-            <strong>{{b.name}}</strong>
-          </div>
+          <strong>{{b.name}}</strong><br>
           ABV: <strong>{{b.abv}}%</strong><br>
-          IBU: <strong>{{b.ibu}}</strong> <br>
+          IBU: <strong>{{b.ibu}}</strong><br>
         <img ng-src={{b.labels.medium}}> <br>
         <p>
           {{b.description}}
